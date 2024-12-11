@@ -1,3 +1,3 @@
 export class CheckPaymentDto {
-  user_id: number
+  constructor(readonly user_id: number) {}
 }
