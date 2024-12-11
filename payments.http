@@ -1,0 +1,12 @@
+POST https://ia-tg-subscribers-534674942695.europe-west4.run.app/check-payment
+Content-Type: application/json
+
+{
+  "from": {
+    "id": 535983364
+  }
+}
+
+
+
+
