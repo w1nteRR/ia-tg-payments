@@ -13,8 +13,6 @@ export class CheckPaymentController {
   async handle(req: Request, res: Response): Promise<void> {
     const { from } = req.body as PreCheckoutQuery
 
-    console.log('CHECK_PAYMENT', from)
-
     try {
       const result = await this.useCase.execute({ user_id: from.id })
 
