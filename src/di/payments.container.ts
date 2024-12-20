@@ -6,6 +6,8 @@ import { CheckPaymentController } from '../presentation/controllers/check-paymen
 import { ConfirmPaymentUseCase } from '../core/usecases/confirm-payment.usecase'
 import { PaymentsFirestore } from '../infrastructure/payments.firestore'
 import { ConfirmPaymentController } from '../presentation/controllers/confirm-payment.controller'
+import { GetPartialPaymentUseCase } from '../core/usecases/get-partial-payment.usecase'
+import { GetPartialPaymentController } from '../presentation/controllers/get-partial-payment.controller'
 
 const container = new Container()
 
@@ -16,6 +18,8 @@ container.bind(CheckPaymentUseCase).toSelf().inSingletonScope()
 container.bind(CheckPaymentController).toSelf().inSingletonScope()
 container.bind(ConfirmPaymentUseCase).toSelf().inSingletonScope()
 container.bind(ConfirmPaymentController).toSelf().inSingletonScope()
+container.bind(GetPartialPaymentUseCase).toSelf().inSingletonScope()
+container.bind(GetPartialPaymentController).toSelf().inSingletonScope()
 // container.bind(VerifyOrderController).toSelf().inSingletonScope()
 // container.bind(PubSubRepository).toSelf().inSingletonScope()
 
