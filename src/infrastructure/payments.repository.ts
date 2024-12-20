@@ -4,6 +4,8 @@ import { CheckPaymentDto } from '../core/repositories/dto/check-payment.dto'
 import { SubscribersServiceApi } from './subscribers-service.api'
 import { ConfirmPaymentDto } from '../core/repositories/dto/confirm-payment.dto'
 import { PaymentsFirestore } from './payments.firestore'
+import { GetPaymentDto } from '../core/repositories/dto/get-payment.dto'
+import { Payment } from '../core/domain/payment'
 
 @injectable()
 export class PaymentsRepository implements IPaymentsRepository {
@@ -22,5 +24,11 @@ export class PaymentsRepository implements IPaymentsRepository {
       user_id: dto.subscriber.id,
     })
     await this.subscribersServiceApi.saveSubscriber(dto)
+  }
+
+  async getPartialPayment(
+    dto: GetPaymentDto,
+  ): Promise<Partial<Payment> | null> {
+    return await this.paymentsFirestore.findPaymentByField(dto)
   }
 }
