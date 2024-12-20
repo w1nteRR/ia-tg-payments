@@ -3,7 +3,7 @@ import { injectable } from 'inversify'
 
 import firestoreConfig from '../configs/firestore.config'
 import { Payment } from '../core/domain/payment'
-import { FindPaymentByFieldDto } from '../core/repositories/dto/find-payment-by-field.dto'
+import { GetPaymentDto } from '../core/repositories/dto/get-payment.dto'
 
 const db = new Firestore(firestoreConfig)
 
@@ -16,10 +16,11 @@ export class PaymentsFirestore {
   }
 
   async findPaymentByField(
-    dto: FindPaymentByFieldDto,
-  ): Promise<Payment | null> {
+    dto: GetPaymentDto,
+  ): Promise<Partial<Payment> | null> {
     const snapshot = await this.collection
       .where(dto.field_path, '==', dto.value)
+      .select(...dto.fields_select)
       .get()
 
     if (snapshot.empty) {
@@ -30,7 +31,7 @@ export class PaymentsFirestore {
 
     const paymentDoc = snapshot.docs[0]
 
-    return paymentDoc.data() as Payment
+    return paymentDoc.data() as Partial<Payment>
   }
 
   async savePayment(payment: Payment): Promise<void> {
