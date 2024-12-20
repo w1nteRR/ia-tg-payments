@@ -3,6 +3,7 @@ import cors from 'cors'
 
 import { CheckPaymentController } from './controllers/check-payment.controller'
 import { ConfirmPaymentController } from './controllers/confirm-payment.controller'
+import { GetPartialPaymentController } from './controllers/get-partial-payment.controller'
 
 const app = express()
 app.use(express.json())
@@ -13,6 +14,7 @@ export class ApiServer {
     port: number,
     checkPaymentController: CheckPaymentController,
     confirmPaymentController: ConfirmPaymentController,
+    getPartialPaymentController: GetPartialPaymentController,
   ) {
     app.post('/check-payment', (req, res) =>
       checkPaymentController.handle(req, res),
@@ -20,6 +22,10 @@ export class ApiServer {
 
     app.post('/confirm-payment', (req, res) =>
       confirmPaymentController.handle(req, res),
+    )
+
+    app.get(`/partial-payment`, (req, res) =>
+      getPartialPaymentController.handle(req, res),
     )
 
     app.listen(port, () => console.log(`server is running, ${port}`))
