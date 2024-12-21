@@ -9,6 +9,19 @@ export class ConfirmPaymentUseCase {
     private paymentsRepository: PaymentsRepository,
   ) {}
   public async execute(dto: ConfirmPaymentDto): Promise<void> {
-    await this.paymentsRepository.confirmPayment(dto)
+    const { payment, subscriber } = dto
+
+    const foundPayment = await this.paymentsRepository.findPayment({
+      user_id: subscriber.id,
+    })
+
+    if (foundPayment === null) {
+      await this.paymentsRepository.confirmPayment(dto)
+    } else {
+      await this.paymentsRepository.updatePayment({
+        user_id: subscriber.id,
+        payment: { ...payment },
+      })
+    }
   }
 }
