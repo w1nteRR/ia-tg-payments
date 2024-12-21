@@ -10,6 +10,18 @@ export class CheckPaymentUseCase {
   ) {}
 
   public async execute(dto: CheckPaymentDto): Promise<boolean> {
-    return await this.paymentsRepository.checkPayment(dto)
+    const { user_id } = dto
+    const currentTimestamp = Math.floor(Date.now() / 1000)
+
+    const payment = await this.paymentsRepository.findPayment({
+      user_id,
+    })
+
+    if (!payment) return true
+
+    const isActiveSubscription =
+      payment.subscription_expiration_date > currentTimestamp
+
+    return !isActiveSubscription
   }
 }
