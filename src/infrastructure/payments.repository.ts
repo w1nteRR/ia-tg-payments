@@ -6,6 +6,9 @@ import { ConfirmPaymentDto } from '../core/repositories/dto/confirm-payment.dto'
 import { PaymentsFirestore } from './payments.firestore'
 import { GetPaymentDto } from '../core/repositories/dto/get-payment.dto'
 import { Payment } from '../core/domain/payment'
+import { DeletePaymentDto } from '../core/repositories/dto/delete-payment.dto'
+import { FindPaymentDto } from '../core/repositories/dto/find-payment-by-field.dto'
+import { UpdatePaymentDto } from '../core/repositories/dto/update-payment.dto'
 
 @injectable()
 export class PaymentsRepository implements IPaymentsRepository {
@@ -30,5 +33,17 @@ export class PaymentsRepository implements IPaymentsRepository {
     dto: GetPaymentDto,
   ): Promise<Partial<Payment> | null> {
     return await this.paymentsFirestore.findPaymentByField(dto)
+  }
+
+  async deletePayment(dto: DeletePaymentDto): Promise<void> {
+    await this.paymentsFirestore.deletePayment(dto)
+  }
+
+  async findPayment(dto: FindPaymentDto): Promise<Payment | null> {
+    return await this.paymentsFirestore.findPayment(dto)
+  }
+
+  async updatePayment(dto: UpdatePaymentDto): Promise<void> {
+    await this.paymentsFirestore.updatePayment(dto)
   }
 }
