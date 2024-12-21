@@ -16,7 +16,7 @@ export class CheckPaymentController {
     try {
       const result = await this.useCase.execute({ user_id: from.id })
 
-      res.status(200).json({ is_already_subscriber: result })
+      res.status(200).json({ payment_verification: result })
     } catch (error) {
       if (error instanceof Error) {
         console.log('ERROR_PAYMENT_CHECK', error)
