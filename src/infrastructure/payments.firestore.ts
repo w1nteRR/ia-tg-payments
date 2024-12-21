@@ -4,6 +4,9 @@ import { injectable } from 'inversify'
 import firestoreConfig from '../configs/firestore.config'
 import { Payment } from '../core/domain/payment'
 import { GetPaymentDto } from '../core/repositories/dto/get-payment.dto'
+import { FindPaymentDto } from '../core/repositories/dto/find-payment-by-field.dto'
+import { UpdatePaymentDto } from '../core/repositories/dto/update-payment.dto'
+import { DeletePaymentDto } from '../core/repositories/dto/delete-payment.dto'
 
 const db = new Firestore(firestoreConfig)
 
@@ -30,11 +33,29 @@ export class PaymentsFirestore {
     }
 
     const paymentDoc = snapshot.docs[0]
-
     return paymentDoc.data() as Partial<Payment>
   }
 
   async savePayment(payment: Payment): Promise<void> {
-    await this.collection.doc().set({ ...payment })
+    await this.collection.doc(String(payment.user_id)).set({ ...payment })
+  }
+
+  async findPayment(dto: FindPaymentDto): Promise<Payment | null> {
+    const paymentRef = await this.collection.doc(String(dto.user_id))
+    const doc = await paymentRef.get()
+
+    if (!doc.exists) return null
+
+    return doc.data() as Payment
+  }
+
+  async updatePayment(dto: UpdatePaymentDto): Promise<void> {
+    const paymentRef = await this.collection.doc(String(dto.user_id))
+
+    await paymentRef.update({ ...dto.payment })
+  }
+
+  async deletePayment(dto: DeletePaymentDto): Promise<void> {
+    await this.collection.doc(String(dto.user_id)).delete()
   }
 }
