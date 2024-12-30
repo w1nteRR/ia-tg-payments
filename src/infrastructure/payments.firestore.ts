@@ -1,14 +1,13 @@
 import { Firestore } from '@google-cloud/firestore'
 import { injectable } from 'inversify'
 
-import firestoreConfig from '../configs/firestore.config'
 import { Payment } from '../core/domain/payment'
 import { GetPaymentDto } from '../core/repositories/dto/get-payment.dto'
 import { FindPaymentDto } from '../core/repositories/dto/find-payment-by-field.dto'
 import { UpdatePaymentDto } from '../core/repositories/dto/update-payment.dto'
 import { DeletePaymentDto } from '../core/repositories/dto/delete-payment.dto'
 
-const db = new Firestore(firestoreConfig)
+const db = new Firestore()
 
 @injectable()
 export class PaymentsFirestore {
