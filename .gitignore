@@ -8,3 +8,4 @@ node_modules
 
 payments.http
 paymnets-api.spec.yaml
+application_default_credentials.json
