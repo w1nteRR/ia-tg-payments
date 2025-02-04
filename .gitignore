@@ -5,3 +5,6 @@ node_modules
 *.env.example
 *.env.development
 *.env.production
+
+payments.http
+paymnets-api.spec.yaml

@@ -1,0 +1,85 @@
+swagger: "2.0"
+info:
+  title: payments-gateway
+  description: Payments API
+  version: 1.0.0
+#host: notifications-gateway-4z9pzldz.ew.gateway.dev
+schemes:
+  - https
+produces:
+  - application/json
+x-google-backend:
+  address: https://payments-390231884807.europe-west1.run.app
+paths:
+  /partial-payment:
+    options:
+      operationId: options-partial-payment
+      summary: Preflight check for CORS.
+      responses:
+        204:
+          description: No Content.
+      x-google-extensions:
+        cors:
+          origins: [ "*" ]
+          methods: [ "GET", "OPTIONS" ]
+          headers: [ "Content-Type", "Authorization" ]
+    get:
+      summary: Get partial payment
+      parameters:
+        - in: "query"
+          name: "fields_select"
+          required: true
+          type: "string"
+          description: "Comma-separated keys of the PaymentBase object to retrieve. Example: 'currency,total_amount'"
+        - in: "query"
+          name: "user_id"
+          required: true
+          type: "string"
+          description: "The unique identifier of the user."
+      operationId: get-partial-payment
+      responses:
+        "200":
+          description: "Partial payment data retrieved successfully."
+          schema:
+            type: "object"
+            additionalProperties:
+              type: "string"
+        "400":
+          description: "Invalid query parameters."
+        "404":
+          description: "Payment data not found."
+definitions:
+  PaymentBase:
+    type: object
+    properties:
+      currency:
+        type: string
+        description: "The currency code (e.g., USD, EUR)."
+      total_amount:
+        type: number
+        description: "The total payment amount."
+      invoice_payload:
+        type: string
+        description: "The invoice payload for the payment."
+      subscription_expiration_date:
+        type: number
+        description: "The expiration date of the subscription in UNIX timestamp."
+      is_recurring:
+        type: boolean
+        description: "Indicates if the payment is recurring."
+      is_first_recurring:
+        type: boolean
+        description: "Indicates if this is the first recurring payment."
+      shipping_option_id:
+        type: string
+        description: "The shipping option ID."
+      telegram_payment_charge_id:
+        type: string
+        description: "The Telegram payment charge ID."
+      provider_payment_charge_id:
+        type: string
+        description: "The provider payment charge ID."
+      user_id:
+        type: number
+        description: "The unique identifier of the user making the payment."
+

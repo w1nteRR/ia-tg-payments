@@ -1,4 +1,4 @@
-POST https://ia-tg-subscribers-534674942695.europe-west4.run.app/check-payment
+POST https://ia-payments-534674942695.europe-west4.run.app/check-payment
 Content-Type: application/json
 
 {
@@ -8,5 +8,45 @@ Content-Type: application/json
 }
 
 
+### GET request with parameter
+GET http://localhost:8080/partial-payment?user_id=394329748&fields_select=subscription_expiration_date
+Accept: application/json
+
+### GET request with parameter
+GET https://ia-payments-534674942695.europe-west4.run.app/partial-payment?user_id=394329748&fields_select=subscription_expiration_date
+Accept: application/json
+
+
+###
+POST http://localhost:8080/confirm-payment
+Content-Type: application/json
+
+{
+  "message_id": 2639,
+  "from": {
+    "id": 394329748,
+    "is_bot": false,
+    "first_name": "Mykola",
+    "username": "mvtmnk",
+    "language_code": "en"
+  },
+  "chat": {
+    "id": 394329748,
+    "first_name": "Mykola",
+    "username": "mvtmnk",
+    "type": "private"
+  },
+  "date": 1734739852,
+  "successful_payment": {
+    "currency": "XTR",
+    "total_amount": 1,
+    "invoice_payload": "unique_payload",
+    "telegram_payment_charge_id": "stxL24UQEKBKzCnyEiOY-8vcohYUcMwnF7MNg397vkDv8RGJ4zLLDY4Qn4Xj4whEy65y0VNNi9db5Gc2MIBq-hOQVg7Z0C9NBqVVtXqRosNYgrHVq9vR73gQYSdQDvQMKDK",
+    "provider_payment_charge_id": "394329748_35",
+    "is_recurring": true,
+    "is_first_recurring": true,
+    "subscription_expiration_date": 1739924336
+  }
+}
 
 
